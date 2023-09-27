@@ -4,15 +4,15 @@
 
 @layer utilities {
   .background-light850_dark100 {
-    @apply bg-light-850 dark: bg-dark-100;
+    @apply bg-light-850 dark:bg-dark-100;
   }
 
   .background-light900_dark200 {
-    @apply bg-light-900 dark: bg-dark-200;
+    @apply bg-light-900 dark:bg-dark-200;
   }
 
   .background-light900_dark300 {
-    @apply bg-light-900 dark: bg-dark-300;
+    @apply bg-light-900 dark:bg-dark-300;
   }
 
   .background-light800_darkgradient {
@@ -20,23 +20,23 @@
   }
 
   .background-light800_dark400 {
-    @apply bg-light-800 dark: bg-dark-400 !important;
+    @apply bg-light-800 dark:bg-dark-400 !important;
   }
 
   .background-light700_dark400 {
-    @apply bg-light-700 dark: bg-dark-400;
+    @apply bg-light-700 dark:bg-dark-400;
   }
 
   .background-light700_dark300 {
-    @apply bg-light-700 dark: bg-dark-300;
+    @apply bg-light-700 dark:bg-dark-300;
   }
 
   .background-light800_dark400 {
-    @apply bg-light-800 dark: bg-dark-400;
+    @apply bg-light-800 dark:bg-dark-400;
   }
 
   .background-light800_dark300 {
-    @apply bg-light-800 dark: bg-dark-300 !important;
+    @apply bg-light-800 dark:bg-dark-300 !important;
   }
 
   .text-dark100_light900 {
