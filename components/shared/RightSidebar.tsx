@@ -6,21 +6,21 @@ import Image from "next/image";
 import RenderTag from './RenderTag';
 
 const hotQuestions = [
-  {_id: 1, title: 'Hello Wonderful people, what programming language should I learn?'},
-  {_id: 2, title: 'Hello Dude, how can I center a div?'},
-  {_id: 3, title: 'Hello Sir, is there a way to learn programming in the age of 40?'},
-  {_id: 4, title: 'What´s up, I need a function to hide a container?'},
-  {_id: 5, title: 'Hey, how do I use felx box?'},
+  {_id: '1', title: 'Hello Wonderful people, what programming language should I learn?'},
+  {_id: '2', title: 'Hello Dude, how can I center a div?'},
+  {_id: '3', title: 'Hello Sir, is there a way to learn programming in the age of 40?'},
+  {_id: '4', title: 'What´s up, I need a function to hide a container?'},
+  {_id: '5', title: 'Hey, how do I use felx box?'},
 ]
 
 const populateTags = [
-  {_id: 1, name: 'Javascript', totalQuestions: 125},
-  {_id: 2, name: 'Python', totalQuestions: 235},
-  {_id: 3, name: 'Java', totalQuestions: 345},
-  {_id: 4, name: 'Rust', totalQuestions: 45},
-  {_id: 5, name: 'Go', totalQuestions: 85},
-  {_id: 6, name: 'Ruby', totalQuestions: 45},
-  {_id: 7, name: 'PHP', totalQuestions: 95},
+  {_id: '1', name: 'Javascript', totalQuestions: 125},
+  {_id: '2', name: 'Python', totalQuestions: 235},
+  {_id: '3', name: 'Java', totalQuestions: 345},
+  {_id: '4', name: 'Rust', totalQuestions: 45},
+  {_id: '5', name: 'Go', totalQuestions: 85},
+  {_id: '6', name: 'Ruby', totalQuestions: 45},
+  {_id: '7', name: 'PHP', totalQuestions: 95},
 ]
 
 const RightSidebar = () => {
