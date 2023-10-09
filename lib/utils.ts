@@ -41,10 +41,7 @@ export const getTimeStamp = (createdAt: Date): string => {
   }
 };
 
-// Example usage:
-const createdAt = new Date('2023-09-01T12:00:00.000Z');
-const formattedTimeAgo = getTimeStamp(createdAt);
-console.log(formattedTimeAgo); // Output: "1 day ago" (or similar)
+
 
 export const formatAndDivideNumber = (number: number): string => {
   if (number >= 1000000) {

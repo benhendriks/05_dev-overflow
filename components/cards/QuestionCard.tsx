@@ -60,7 +60,7 @@ const QuestionCard = ({
           imgUrl={author.picture}
           alt="user"
           value={author.name}
-          title={` .asked ${getTimeStamp(createdAt)}"`}
+          title={` .asked ${getTimeStamp(createdAt)}`}
           href={`/profile/${author._id}`}
           isAuthor
           textStyles="body-medium text-dark400_light700"
