@@ -1,10 +1,5 @@
 "use client";
 
-import React, { ReactHTMLElement, useRef } from "react";
-import { Editor } from "@tinymce/tinymce-react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -14,11 +9,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { QuestionsSchema } from '@/lib/validation';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Editor } from "@tinymce/tinymce-react";
+import Image from "next/image";
+import React, { useRef } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { Badge } from '../ui/badge';
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { QuestionsSchema } from '@/lib/validation';
-import { Badge } from '../ui/badge';
-import Image from "next/image";
 
 const Question = () => {
   const editorRef = useRef(null);
