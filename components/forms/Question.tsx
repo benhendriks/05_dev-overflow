@@ -41,7 +41,7 @@ const Question = () => {
   }
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, field: any) => {
-    if(e.key === 'enter' && field.name === 'tags') {
+    if(e.key === 'Enter' && field.name === 'tags') {
       e.preventDefault();
 
       const tagInput = e.target as HTMLInputElement;
@@ -64,6 +64,12 @@ const Question = () => {
       }
     }
   }
+
+  const handleTagRemove = (tag: string, field: any) => {
+    const newTags = field.value.filter((t:string) => t !== tag);
+    form.setValue('tags', newTags);
+  }
+
   return (
     <Form {...form}>
       <form
@@ -151,16 +157,19 @@ const Question = () => {
                   {field.value.length > 0 && (
                     <div className="flex-start mt-2.5 gap-2.5">
                       {field.value.map((tag: any) => (
-                        <Badge key={tag}>
-                          {tag}
-                          <Image
-                            src='/assets/icons/close.svg'
-                            alt="Close icon"
-                            width={12}
-                            height={12}
-                            className="cursor-pointerobject-contain invert-0 dark:invert"
-                          />
-                        </Badge>
+                      <Badge key={tag}
+                        className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize"
+                        onClick={() => handleTagRemove(tag, field)}
+                      >
+                        {tag}
+                        <Image
+                          src='/assets/icons/close.svg'
+                          alt="Close icon"
+                          width={12}
+                          height={12}
+                          className="cursor-pointerobject-contain invert-0 dark:invert"
+                        />
+                      </Badge>
                       ))}
                     </div>
                   )}
