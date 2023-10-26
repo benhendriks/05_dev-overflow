@@ -14,6 +14,7 @@ import { QuestionsSchema } from '@/lib/validation';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
 import Image from "next/image";
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -23,9 +24,15 @@ import { Input } from "../ui/input";
 
 const type: any = 'create';
 
-const Question = () => {
+interface Props {
+  mongoUserId: string;
+}
+
+const Question = ({ mongoUserId }: Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const pathname =  usePathname();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
@@ -45,8 +52,10 @@ const Question = () => {
         title: values.title,
         content: values.explanation,
         tags: values.tags,
-        //author:
-      })
+        author: JSON.parse(mongoUserId),
+        path: values.explanation,
+      });
+      router.push('/')
     } catch (error) {
 
     } finally {
