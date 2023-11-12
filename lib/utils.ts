@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -51,6 +51,6 @@ export const formatAndDivideNumber = (number: number): string => {
     const formatted = (number / 1000).toFixed(1);
     return formatted + 'K';
   } else {
-    return number.toString();
+    return number?.toString();
   }
 };

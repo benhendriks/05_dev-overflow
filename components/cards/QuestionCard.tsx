@@ -1,11 +1,7 @@
-"use client";
-
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import RenderTag from '../shared/RenderTag';
-import Metric from '../shared/Metric';
 import { formatAndDivideNumber, getTimeStamp } from '@/lib/utils';
+import Link from "next/link";
+import Metric from '../shared/Metric';
+import RenderTag from '../shared/RenderTag';
 
 interface QuestionProps {
   key: string;
@@ -75,7 +71,7 @@ const QuestionCard = ({
         <Metric
           imgUrl="/assets/icons/message.svg"
           alt="message"
-          value={formatAndDivideNumber(anwsers.length)}
+          value={formatAndDivideNumber(anwsers?.length)}
           title=" Answers"
           textStyles="small-medium text-dark400_light800"
         />

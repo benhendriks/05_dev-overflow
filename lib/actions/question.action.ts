@@ -16,8 +16,8 @@ export async function getQuestions(params: GetQuestionsParams) {
     console.log("🚀 ~ file: question.action.ts:17 ~ getQuestions ~ questions:", questions)
     return{ questions };
   } catch (error) {
-  console.log("🚀 ~ file: question.action.ts:18 ~ getQuestions ~ error:", error);
-  throw error;
+    console.log("🚀 ~ file: question.action.ts:18 ~ getQuestions ~ error:", error);
+    throw error;
   }
 }
 
@@ -51,7 +51,7 @@ export async function createQuestion(params: CreateQuestionParams) {
     }
 
   } catch (error) {
-  console.log("🚀 ~ file: question.action.ts:52 ~ createQuestion ~ error:", error)
+    console.log("🚀 ~ file: question.action.ts:52 ~ createQuestion ~ error:", error)
 
   }
 }
