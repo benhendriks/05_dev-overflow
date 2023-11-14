@@ -11,7 +11,6 @@ import Link from "next/link";
 
 export default async function Home() {
   const result = await getQuestions({});
-  console.log("🚀 ~ file: page.tsx:173 ~ Home ~ result:", result.questions)
   return (
     <>
       <div className="flex flex-col-reverse justify-between w-full gap-4 sm:flex-row sm:item-center">

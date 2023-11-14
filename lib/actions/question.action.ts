@@ -3,6 +3,7 @@
 import Question from '@/database/question.modal';
 import Tag from '@/database/tag.modal';
 import User from '@/database/user.modal';
+import { revalidatePath } from 'next/cache';
 import { connectToDatabase } from '../mongoose';
 import { CreateQuestionParams, GetQuestionsParams } from './shared.types';
 
@@ -13,10 +14,9 @@ export async function getQuestions(params: GetQuestionsParams) {
     const questions = await Question.find({})
     .populate({ path: 'tags', model: Tag})
     .populate({ path: 'author', model: User})
-    console.log("🚀 ~ file: question.action.ts:17 ~ getQuestions ~ questions:", questions)
+    .sort({ createdAt: -1 })
     return{ questions };
   } catch (error) {
-    console.log("🚀 ~ file: question.action.ts:18 ~ getQuestions ~ error:", error);
     throw error;
   }
 }
@@ -49,7 +49,7 @@ export async function createQuestion(params: CreateQuestionParams) {
       // Create an interaction record for the user`s ask question action
       // Increment authors reputationby +5 points fot creating a question
     }
-
+    revalidatePath(path);
   } catch (error) {
     console.log("🚀 ~ file: question.action.ts:52 ~ createQuestion ~ error:", error)
 
