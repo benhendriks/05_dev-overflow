@@ -9,6 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useTheme } from '@/context/ThemeProvider';
 import { createQuestion } from '@/lib/actions/question.action';
 import { QuestionsSchema } from '@/lib/validation';
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +30,7 @@ interface Props {
 }
 
 const Question = ({ mongoUserId }: Props) => {
+  const {mode}= useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -152,6 +154,8 @@ const Question = ({ mongoUserId }: Props) => {
                       "codesample | bold italic forcolor | alignleft aligncenter | " +
                       "alignright alignjustify | bullist numlist",
                     content_style: "body { font-family:Inter; font-size:16px }",
+                    skin: mode === 'dark' ? 'oxide-dark' : 'oxide',
+                    content_css: mode === 'dark' ? 'dark' : 'light',
                   }}
                 />
               </FormControl>
