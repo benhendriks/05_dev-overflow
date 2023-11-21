@@ -51,8 +51,8 @@ export async function createQuestion(params: CreateQuestionParams) {
     }
     revalidatePath(path);
   } catch (error) {
-    console.log("🚀 ~ file: question.action.ts:52 ~ createQuestion ~ error:", error)
-
+    console.log("🚀 ~ file: question.action.ts:54 ~ createQuestion ~ error:", error);
+    throw error;
   }
 }
 
@@ -66,7 +66,7 @@ export async function getQuestionById(params: GetQuestionByIdParams) {
       .populate({ path: 'author', model: User, select: '_id clerkId name picture'})
       return question;
   }catch (error){
-    console.log("🚀 ~ file: user.action.ts:88 ~ getAllUsers ~ error:", error);
+    console.log("🚀 ~ file: question.action.ts:69 ~ getQuestionById ~ error:", error)
     throw error;
   }
 }

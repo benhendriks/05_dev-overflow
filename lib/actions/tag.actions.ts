@@ -22,7 +22,7 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
 
 
   }catch (error){
-    console.log("🚀 ~ file: user.action.ts:88 ~ getAllUsers ~ error:", error);
+    console.log("🚀 ~ file: tag.actions.ts:25 ~ getTopInteractedTags ~ error:", error)
     throw error;
   }
 }
@@ -33,7 +33,7 @@ export async function getAllTags(params: any) {
     const tags = await Tag.find({});
     return {tags}
   }catch (error){
-    console.log("🚀 ~ file: user.action.ts:88 ~ getAllUsers ~ error:", error);
+    console.log("🚀 ~ file: tag.actions.ts:36 ~ getAllTags ~ error:", error)
     throw error;
   }
 }

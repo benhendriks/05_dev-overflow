@@ -1,16 +1,25 @@
 'use client'
 import { useTheme } from '@/context/ThemeProvider';
+import { createAnswer } from '@/lib/actions/answer.action';
 import { AnswersSchema } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Editor } from '@tinymce/tinymce-react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '../ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 
-const Answer = () => {
+interface Props {
+  question: string;
+  questionId: string;
+  authorId: string;
+}
+
+const Answer = ({ question, questionId, authorId }:Props) => {
+  const pathname = usePathname();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {mode}= useTheme();
   const editorRef = useRef(null);
@@ -20,7 +29,26 @@ const Answer = () => {
       answer: '',
     }
   });
-  const handleCreateAnswer = () => {}
+  const handleCreateAnswer = async (values: z.infer<typeof AnswersSchema>) => {
+    setIsSubmitting(true);
+    try {
+      await createAnswer({
+        content: values.answer,
+        author: JSON.parse(authorId),
+        question: JSON.parse(questionId),
+        path: pathname,
+      })
+      form.reset();
+      if(editorRef.current) {
+        const editor = editorRef.current as any;
+        editor.setContent('');
+      }
+    } catch (error) {
+      console.log("🚀 ~ file: Answer.tsx:47 ~ handleCreateAnswer ~ error:", error)
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
   return (
     <div>
       <div className='flex flex-col justify-between gap-5 sm:flex-row sm:item-center sm:gap-2'>
@@ -81,7 +109,11 @@ const Answer = () => {
             )}
           />
           <div className="flex justify-end">
-          <Button type="submit" className='primary-gradient w-fit !text-light-900' disabled={isSubmitting}>
+          <Button
+            type="submit"
+            className='primary-gradient w-fit !text-light-900'
+            disabled={isSubmitting}
+          >
             {isSubmitting ? 'Submitting...' : 'Submit'}
           </Button>
           </div>
@@ -91,4 +123,4 @@ const Answer = () => {
   )
 }
 
-export default Answer
+export default Answer;

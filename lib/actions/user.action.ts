@@ -16,7 +16,7 @@ export async function getUserById(params: any){
 
     return user;
   } catch (error) {
-    console.log("🚀 Error!!", error);
+    console.log("🚀 ~ file: user.action.ts:19 ~ getUserById ~ error:", error)
     throw error;
   }
 }
@@ -27,7 +27,7 @@ export async function createUser(userData: CreateUserParams) {
     const newUser = await User.create(userData);
     return newUser;
   } catch (error) {
-    console.log("🚀 Error!!", error);
+    console.log("🚀 ~ file: user.action.ts:30 ~ createUser ~ error:", error)
     throw error;
   }
 }
@@ -42,7 +42,7 @@ export async function updateUser(params: UpdateUserParams) {
     });
     revalidatePath(path);
   } catch (error) {
-    console.log("🚀 Error!!", error);
+    console.log("🚀 ~ file: user.action.ts:45 ~ updateUser ~ error:", error)
     throw error;
   }
 }
@@ -75,7 +75,7 @@ export async function deleteUser(params: DeleteUserParams) {
     return deletedUser;
 
   } catch (error) {
-    console.log("🚀 Error!!", error);
+    console.log("🚀 ~ file: user.action.ts:78 ~ deleteUser ~ error:", error)
     throw error;
   }
 }
@@ -88,7 +88,7 @@ export async function getAllUsers(params: GetAllUsersParams) {
     .sort({ createdAt: -1})
     return { users };
   } catch (error) {
-    console.log("🚀 ~ file: user.action.ts:88 ~ getAllUsers ~ error:", error);
+    console.log("🚀 ~ file: user.action.ts:91 ~ getAllUsers ~ error:", error)
     throw error;
   }
 }
