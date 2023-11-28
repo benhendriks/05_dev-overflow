@@ -23,7 +23,7 @@ const Page = async ({params, searchParams}: any) => {
   }
   return (
     <>
-      <div className='flex-start w-full flex-col '>
+      <div className='flex-start w-full flex-col'>
         <div className="flex w-full flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
           <Link
             className="flex items-center justify-start gap-1"
@@ -36,12 +36,21 @@ const Page = async ({params, searchParams}: any) => {
               src={result.author.picture}
               alt={result.author.name}
             />
-            <p className='paaragraph-semibold text-dark300_light700'>
+            <p className='paragraph-semibold text-dark300_light700'>
               {result.author.name}
             </p>
           </Link>
           <div className="flex justify-end text-dark300_light700">
-            <Votes />
+            <Votes
+              type='question'
+              itemId={JSON.stringify(result._id)}
+              userId={JSON.stringify(mongoUser?._id)}
+              upvotes={result.upvotes.length}
+              hasupVoted={result.upvotes.includes(mongoUser?._id)}
+              downVotes={result.downvotes.length}
+              hasdownVoted={result.downvotes.includes(mongoUser?._id)}
+              hasSaved={mongoUser?.saved.includes(result._id)}
+            />
           </div>
         </div>
         <h2 className='h2-semibold text-dark200_light900 mt-3.5 w-full text-left'>
