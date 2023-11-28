@@ -1,6 +1,8 @@
 'use client'
+import { downvoteQuestion, upvoteQuestion } from '@/lib/actions/question.action';
 import { formatAndDivideNumber } from '@/lib/utils';
 import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
 interface Props {
   type: string;
   itemId: string;
@@ -20,12 +22,56 @@ const Votes = (
   downVotes,
   hasdownVoted,
   hasSaved, }: Props) => {
-
+    const pathName = usePathname();
+    const router = useRouter();
     const handleSave = () => {
 
     }
-    const handleVote = (action: string) => {
+    const handleVote = async (action: string) => {
+      if(!userId) return;
+      if(action === 'upvote') {
+        if(type === 'Question') {
+          await upvoteQuestion({
+            questionId: JSON.parse(itemId),
+            userId: JSON.parse(userId),
+            hasupVoted,
+            hasdownVoted,
+            path: pathName,
+          });
+        } else if(type === 'Answer') {
+/*             await upvoteAnswer({
+              questionId: JSON.parse(itemId),
+              userId: JSON.parse(userId),
+              hasupVoted,
+              hasdownVoted,
+              path: pathName,
+          }); */
+        }
+        // Show a toast
+        return;
+      }
 
+      if(action === 'downvote') {
+        if(type === 'Question') {
+          await downvoteQuestion({
+            questionId: JSON.parse(itemId),
+            userId: JSON.parse(userId),
+            hasupVoted,
+            hasdownVoted,
+            path: pathName,
+          });
+        } else if(type === 'Answer') {
+/*             await downvoteAnswer({
+              questionId: JSON.parse(itemId),
+              userId: JSON.parse(userId),
+              hasupVoted,
+              hasdownVoted,
+              path: pathName,
+          }); */
+        }
+        // Show a toast
+        return;
+      }
     }
 
   return (
@@ -38,7 +84,7 @@ const Votes = (
             width={18}
             height={18}
             className='cursor-pointer'
-            onClick={() => handleVote('upVote')}
+            onClick={() => handleVote('upvote')}
           />
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
             <p className='satle-medium text-dark400_light900'>
@@ -53,7 +99,7 @@ const Votes = (
             width={18}
             height={18}
             className='cursor-pointer'
-            onClick={() => handleVote('downVote')}
+            onClick={() => handleVote('downvote')}
           />
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
             <p className='satle-medium text-dark400_light900'>

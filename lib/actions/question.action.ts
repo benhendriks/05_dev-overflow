@@ -83,7 +83,7 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
       updateQuery = { $pull: { upvotes: userId }};
     } else if (hasdownVoted) {
       updateQuery = {
-        $pull: { downVotes: userId },
+        $pull: { downvotes: userId },
         $push: { upvotes: userId }
       };
     } else {
@@ -98,7 +98,7 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
     // Increment authors reputation by +10 points for upvoting a question
     revalidatePath(path);
   }catch (error){
-    console.log("🚀 ~ file: question.action.ts:79 ~ upvoteQuestion ~ error:", error)
+    console.log("🚀 ~ file: question.action.ts:101 ~ upvoteQuestion ~ error:", error)
     throw error;
   }
 }
@@ -112,7 +112,7 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
     let updateQuery = {};
 
     if (hasdownVoted) {
-      updateQuery = { $pull: { downvote: userId } };
+      updateQuery = { $pull: { downvotes: userId } };
     } else if (hasupVoted) {
       updateQuery = {
         $pull: { upvotes: userId },
