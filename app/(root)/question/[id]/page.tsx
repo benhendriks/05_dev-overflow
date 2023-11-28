@@ -12,7 +12,8 @@ import { auth } from '@clerk/nextjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const Page = async ({params, searchParams}) => {
+const Page = async ({params, searchParams}: any) => {
+  console.log("🚀 ~ file: page.tsx:16 ~ Page ~ searchParams:", searchParams)
   const { userId: clerkId } = auth();
   let mongoUser;
   const result = await getQuestionById({ questionId: params.id });
