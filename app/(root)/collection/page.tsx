@@ -7,7 +7,6 @@ import { getSavedQuestions } from '@/lib/actions/user.action';
 import { auth } from '@clerk/nextjs';
 
 export default async function Home() {
-
   const { userId } = auth();
   if(!userId) return null;
   const result = await getSavedQuestions({
