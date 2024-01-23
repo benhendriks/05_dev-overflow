@@ -1,12 +1,13 @@
 'use server'
 
+import Answer from '@/database/answer.model';
 import Question from '@/database/question.modal';
 import Tag from '@/database/tag.modal';
 import User from '@/database/user.modal';
 import { FilterQuery } from 'mongoose';
 import { revalidatePath } from 'next/cache';
 import { connectToDatabase } from '../mongoose';
-import { CreateUserParams, DeleteUserParams, GetAllUsersParams, GetSavedQuestionsParams, ToggleSaveQuestionParams, UpdateUserParams } from './shared.types';
+import { CreateUserParams, DeleteUserParams, GetAllUsersParams, GetSavedQuestionsParams, GetUserByIdParams, ToggleSaveQuestionParams, UpdateUserParams } from './shared.types';
 
 export async function getUserById(params: any){
   try {
@@ -163,6 +164,27 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
 
   } catch (error) {
     console.log("🚀 ~ file: user.action.ts:88 ~ getAllUsers ~ error:", error);
+    throw error;
+  }
+}
+
+export async function getUserInfo(params: GetUserByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+
+    const user = await User.findOne({ clerkId: userId });
+    if(!user) {
+      throw new Error('User not found')
+    }
+
+    const totalQuestions = await Question.countDocuments({ author: user._id });
+    const totalAnswers = await Answer.countDocuments({ author: user._id });
+
+    return { user, totalQuestions, totalAnswers };
+  } catch (error) {
+    console.log("🚀 ~ file: user.action.ts:175 ~ getUserInfo ~ error:", error)
     throw error;
   }
 }

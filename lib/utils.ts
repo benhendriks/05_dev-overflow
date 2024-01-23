@@ -52,3 +52,13 @@ export const formatAndDivideNumber = (number: number): string => {
     return number?.toString();
   }
 };
+
+export const getJoinedDate = (dateObject: Date): string => {
+  const formattedDate = `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1)
+    .toString()
+    .padStart(2, '0')}-${dateObject.getDate().toString().padStart(2, '0')}`;
+
+  return formattedDate;
+};
+
+
