@@ -9,7 +9,7 @@ export interface IQuestion extends Document {
   upvotes: Schema.Types.ObjectId[];
   downvotes: Schema.Types.ObjectId[];
   author: Schema.Types.ObjectId;
-  anwers: Schema.Types.ObjectId[];
+  answers: Schema.Types.ObjectId[];
   createdAt: Date;
 }
 
@@ -21,7 +21,7 @@ const QuestionSchema = new Schema({
   upvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   downvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   author: { type: Schema.Types.ObjectId, ref: 'User' },
-  anwers: [{ type: Schema.Types.ObjectId, ref: 'Answer' }],
+  answers: [{ type: Schema.Types.ObjectId, ref: 'Answer' }],
   createdAt: { type: Date, default: Date.now },
 })
 

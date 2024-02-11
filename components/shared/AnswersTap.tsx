@@ -1,5 +1,6 @@
-import { getUsersQuestions } from '@/lib/actions/user.action';
+import { getUsersAnswers } from '@/lib/actions/user.action';
 import { SearchParamsProps } from '@/types';
+import AnswerCard from '../cards/AnswerCard';
 
 interface Props extends SearchParamsProps{
   userId: string;
@@ -8,10 +9,23 @@ interface Props extends SearchParamsProps{
 
 const AnswersTap = async ({ searchParams, userId, clerkId }: Props) => {
 
-  const result = await getUsersQuestions({ userId, page: 1 })
+  const result = await getUsersAnswers({ userId, page: 1 })
 
   return (
-    <div>AnswersTap</div>
+    <>
+      {result.answers.map((item) => (
+        <AnswerCard
+          key={item._id}
+          clerkId={clerkId}
+          _id={item._id}
+          question={item.question}
+          author={item.author}
+          upvotes={item.upvotes.length}
+          createdAt={item.createdAt}
+        >
+        </AnswerCard>
+      ))}
+    </>
   )
 }
 

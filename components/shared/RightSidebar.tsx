@@ -1,8 +1,7 @@
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
 import Image from "next/image";
+import Link from 'next/link';
 import RenderTag from './RenderTag';
 
 const hotQuestions = [
@@ -10,7 +9,7 @@ const hotQuestions = [
   {_id: '2', title: 'Hello Dude, how can I center a div?'},
   {_id: '3', title: 'Hello Sir, is there a way to learn programming in the age of 40?'},
   {_id: '4', title: 'What´s up, I need a function to hide a container?'},
-  {_id: '5', title: 'Hey, how do I use felx box?'},
+  {_id: '5', title: 'Hey, how do I use flex box?'},
 ]
 
 const populateTags = [

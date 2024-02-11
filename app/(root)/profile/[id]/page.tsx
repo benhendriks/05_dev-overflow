@@ -77,7 +77,7 @@ const Page = async ({params, searchParams}: URLProps) => {
             <TabsTrigger value="top-posts" className="tab">Top Posts</TabsTrigger>
             <TabsTrigger value="answers" className="tab">Answers</TabsTrigger>
           </TabsList>
-          <TabsContent value="top-posts">
+          <TabsContent value="top-posts" className="flex w-full flex-col gap-6">
             <QuestionsTap
               searchParams={searchParams}
               userId={userInfo.user._id}
