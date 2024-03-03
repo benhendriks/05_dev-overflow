@@ -1,11 +1,13 @@
 'use server'
 
+import Answer from '@/database/answer.model';
+import Interaction from '@/database/interaction.modal';
 import Question from '@/database/question.modal';
 import Tag from '@/database/tag.modal';
 import User from '@/database/user.modal';
 import { revalidatePath } from 'next/cache';
 import { connectToDatabase } from '../mongoose';
-import { CreateQuestionParams, GetQuestionByIdParams, GetQuestionsParams, QuestionVoteParams } from './shared.types';
+import { CreateQuestionParams, DeleteAnswerParams, DeleteQuestionParams, GetQuestionByIdParams, GetQuestionsParams, QuestionVoteParams } from './shared.types';
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
@@ -131,6 +133,46 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
     revalidatePath(path);
   } catch (error) {
     console.log("🚀 ~ file: question.action.ts:133 ~ downvoteQuestion ~ error:", error)
+    throw error;
+  }
+}
+
+export async function deleteQuestion(params: DeleteQuestionParams)  {
+  try {
+    connectToDatabase();
+
+    const { questionId, path } = params;
+
+    await Question.deleteOne({ _id: questionId});
+    await Answer.deleteMany({ question: questionId});
+    await Interaction.deleteMany({ interaction: questionId});
+    await Tag.updateMany({ questions: questionId}, { $pull: { questions: questionId}});
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log("🚀 ~ deleteQuestion ~ error:", error)
+    throw error;
+  }
+}
+
+export async function deleteAnswer(params: DeleteAnswerParams)  {
+  try {
+    connectToDatabase();
+
+    const { answerId, path } = params;
+    const answer = await Answer.findById({ _id: answerId});
+
+    if (!answerId) {
+      throw new Error('Answer not found');
+    }
+
+    await answer.deleteOne({ _id: answerId });
+    await Question.updateMany({ _id: answer.question }, { $pull: { answers: answerId}});
+    await Interaction.deleteMany({ answer: answerId});
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log("🚀 ~ deleteQuestion ~ error:", error)
     throw error;
   }
 }

@@ -1,10 +1,11 @@
 'use server'
 
 import Answer from '@/database/answer.model';
+import Interaction from '@/database/interaction.modal';
 import Question from '@/database/question.modal';
 import { revalidatePath } from 'next/cache';
 import { connectToDatabase } from '../mongoose';
-import { CreateAnswerParams, GetAnswersParams } from './shared.types';
+import { CreateAnswerParams, DeleteAnswerParams, GetAnswersParams } from './shared.types';
 
 
 export async function createAnswer(params: CreateAnswerParams) {
@@ -37,6 +38,25 @@ export async function getAnswers(params: GetAnswersParams) {
     return { answers };
   } catch (error) {
     console.log("🚀 ~ file: answer.action.ts:37 ~ getAllAnswer ~ error:", error)
+    throw error;
+  }
+}
+
+export async function deleteAnswer(params: DeleteAnswerParams) {
+  try {
+    connectToDatabase();
+
+    const { answerId, path } = params;
+
+    const answer = await Answer.findById({ answerId });
+    if(!answer) {throw new Error('Answer id is required')};
+    await answer.deleteOne({ _id: answerId });
+    await Question.updateMany({ _id: answer.question }, { $pull: { answers: answerId } });
+    await Interaction.deleteMany({ answer: answerId });
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log("🚀 ~ deleteAnswer ~ error:", error)
     throw error;
   }
 }

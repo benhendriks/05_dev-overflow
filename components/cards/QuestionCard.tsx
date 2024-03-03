@@ -1,5 +1,7 @@
 import { formatAndDivideNumber, getTimeStamp } from '@/lib/utils';
+import { SignedIn } from '@clerk/nextjs';
 import Link from "next/link";
+import EditDeletActions from '../shared/EditDeletActions';
 import Metric from '../shared/Metric';
 import RenderTag from '../shared/RenderTag';
 
@@ -35,10 +37,16 @@ const QuestionCard = ({
   anwsers,
   createdAt,
 }: QuestionProps) => {
+  const showActionButtons = true;
+    //clerkId && clerkId === author._id;
+    console.log("🚀 ~ showActionButtons:", showActionButtons)
+    console.log("🚀 ~ author._id:", author._id)
+    console.log("🚀 ~ clerkId:", clerkId)
+
   return (
-    <div className="card-wrapper p-9 sm:px-11 rounded-[10px] ">
+    <div className="card-wrapper p-9 sm:px-11 rounded-[10px]">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
-        <div className="">
+        <div>
           <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
             {getTimeStamp(createdAt)}
           </span>
@@ -47,6 +55,11 @@ const QuestionCard = ({
           </Link>
         </div>
         {/* if signed in add creat update delete function */}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeletActions type="Question" itemId={JSON.stringify(_id)} />
+          )}
+        </SignedIn>
       </div>
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) =>(
