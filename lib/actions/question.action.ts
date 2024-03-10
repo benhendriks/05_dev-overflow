@@ -7,7 +7,7 @@ import Tag from '@/database/tag.modal';
 import User from '@/database/user.modal';
 import { revalidatePath } from 'next/cache';
 import { connectToDatabase } from '../mongoose';
-import { CreateQuestionParams, DeleteAnswerParams, DeleteQuestionParams, GetQuestionByIdParams, GetQuestionsParams, QuestionVoteParams } from './shared.types';
+import { CreateQuestionParams, DeleteQuestionParams, EditQuestionParams, GetQuestionByIdParams, GetQuestionsParams, QuestionVoteParams } from './shared.types';
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
@@ -155,24 +155,26 @@ export async function deleteQuestion(params: DeleteQuestionParams)  {
   }
 }
 
-export async function deleteAnswer(params: DeleteAnswerParams)  {
+export async function editQuestion(params: EditQuestionParams)  {
   try {
     connectToDatabase();
 
-    const { answerId, path } = params;
-    const answer = await Answer.findById({ _id: answerId});
+    const { questionId, title, content, path } = params;
 
-    if (!answerId) {
-      throw new Error('Answer not found');
+    const question = await Question.findById(questionId).populate('tags');
+
+    if(!question) {
+      throw new Error('Question not found');
     }
 
-    await answer.deleteOne({ _id: answerId });
-    await Question.updateMany({ _id: answer.question }, { $pull: { answers: answerId}});
-    await Interaction.deleteMany({ answer: answerId});
+    question.title = title;
+    question.content = content;
+
+    await question.save();
 
     revalidatePath(path);
   } catch (error) {
-    console.log("🚀 ~ deleteQuestion ~ error:", error)
+    console.log("🚀 ~ editQuestion ~ error:", error)
     throw error;
   }
 }
