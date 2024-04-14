@@ -27,7 +27,6 @@ interface QuestionProps {
 
 const QuestionCard = ({
   clerkId,
-  key,
   _id,
   title,
   tags,

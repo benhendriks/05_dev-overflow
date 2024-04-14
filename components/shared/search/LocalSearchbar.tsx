@@ -1,9 +1,7 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 interface CustomInputProps {
   route: string;
@@ -21,7 +19,7 @@ const LocalSearchbar = ({
 }: CustomInputProps) => {
   return (
     <div
-      className={`background-light800_darkgradient item-center flex min-h-[56px] grow gap-4 rounded[10px] px-4 ${otherClasses}`}
+      className={`background-light800_darkgradient items-center flex min-h-[56px] grow gap-4 rounded[10px] px-4 ${otherClasses}`}
     >
       {iconPosition === "left" && (
         <Image
