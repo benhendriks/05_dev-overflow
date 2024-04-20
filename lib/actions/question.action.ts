@@ -188,7 +188,7 @@ export async function getHotQuestions() {
 
     return hotQuestions;
   }catch (error){
-    console.log("🚀 ~ file: user.action.ts:88 ~ getAllUsers ~ error:", error);
+    console.log("🚀 ~ getHotQuestions ~ error:", error)
     throw error;
   }
 }
