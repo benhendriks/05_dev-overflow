@@ -1,21 +1,13 @@
 import { getHotQuestions } from '@/lib/actions/question.action';
+import { getTopPopolareTags } from '@/lib/actions/tag.actions';
 import Image from "next/image";
 import Link from 'next/link';
 import RenderTag from './RenderTag';
 
 
-const populateTags = [
-  {_id: '1', name: 'Javascript', totalQuestions: 125},
-  {_id: '2', name: 'Python', totalQuestions: 235},
-  {_id: '3', name: 'Java', totalQuestions: 345},
-  {_id: '4', name: 'Rust', totalQuestions: 45},
-  {_id: '5', name: 'Go', totalQuestions: 85},
-  {_id: '6', name: 'Ruby', totalQuestions: 45},
-  {_id: '7', name: 'PHP', totalQuestions: 95},
-]
-
 const RightSidebar = async () => {
   const hotQuestions = await getHotQuestions();
+  const populateTags = await getTopPopolareTags();
   return (
     <section className="background-light900_dark200 light-border sticky right-0 top-0 flex h-screen flex-col overflow-y-auto border-left p-6 pt-36 shadow-light-300 dark:shadow-none max-xl:hidden w-[350px] custom-scrollbar">
     <div className="">
@@ -47,7 +39,7 @@ const RightSidebar = async () => {
                 key={tag._id}
                 _id={tag._id}
                 name={tag.name}
-                totalQuestions={tag.totalQuestions}
+                totalQuestions={tag.numberOfQuestions}
                 showCount
               />
             ))}
