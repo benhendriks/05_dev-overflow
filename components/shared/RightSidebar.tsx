@@ -1,16 +1,8 @@
-"use client";
-
+import { getHotQuestions } from '@/lib/actions/question.action';
 import Image from "next/image";
 import Link from 'next/link';
 import RenderTag from './RenderTag';
 
-const hotQuestions = [
-  {_id: '1', title: 'Hello Wonderful people, what programming language should I learn?'},
-  {_id: '2', title: 'Hello Dude, how can I center a div?'},
-  {_id: '3', title: 'Hello Sir, is there a way to learn programming in the age of 40?'},
-  {_id: '4', title: 'What´s up, I need a function to hide a container?'},
-  {_id: '5', title: 'Hey, how do I use flex box?'},
-]
 
 const populateTags = [
   {_id: '1', name: 'Javascript', totalQuestions: 125},
@@ -22,7 +14,8 @@ const populateTags = [
   {_id: '7', name: 'PHP', totalQuestions: 95},
 ]
 
-const RightSidebar = () => {
+const RightSidebar = async () => {
+  const hotQuestions = await getHotQuestions();
   return (
     <section className="background-light900_dark200 light-border sticky right-0 top-0 flex h-screen flex-col overflow-y-auto border-left p-6 pt-36 shadow-light-300 dark:shadow-none max-xl:hidden w-[350px] custom-scrollbar">
     <div className="">
