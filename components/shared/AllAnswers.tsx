@@ -16,7 +16,9 @@ interface Props {
 const AllAnswers = async ({ questionId, userId, totalAnswers, page, filter }: Props) => {
   console.log("🚀 ~ file: AllAnswers.tsx:18 ~ AllAnswers ~ totalAnswers:", totalAnswers)
   const result = await getAnswers({
-    questionId
+    questionId,
+    page: page ? +page : 1,
+    sortBy: filter,
   })
   return (
     <div className='mt-11'>
@@ -26,7 +28,7 @@ const AllAnswers = async ({ questionId, userId, totalAnswers, page, filter }: Pr
           filters={AnswerFilters}
         />
       </div>
-      <div className="flex">
+      <div className="flex flex-col">
         {result.answers.map((answer) => (
           <article
             key={answer._id}
