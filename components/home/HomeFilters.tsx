@@ -40,7 +40,7 @@ const HomeFilters = () => {
           key={item.value}
           onClick={() =>{}}
           className={`body-medium rounded-lg px-6 py-3 capitalize shadow-none ${active === item.value
-          ? 'bg-primary-100 text-primary-500'
+          ? 'bg-primary100 text-primary-500'
           : 'bg-light-800 dark:text-light-500'}`}
           onClickCapture={() => handleTypeClick(item.value)}
         >
