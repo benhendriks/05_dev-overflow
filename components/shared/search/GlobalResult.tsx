@@ -37,7 +37,18 @@ const GlobalResult = () => {
   }, [global, type]);
 
   const renderLink = (type: string, id: string) => {
-    return '/';
+    switch (type) {
+      case 'question':
+        return `/question/${id}`;
+      case 'answer':
+        return `/question/${id}`;
+      case 'user':
+        return `/profile/${id}`;
+      case 'tag':
+        return `/tags/${id}`;
+      default:
+        return '/';
+    }
   }
   return (
     <div className="absolute top-full z-10 mt-3 w-full bg-light-800 py-5 shadow-sm dark:bg-dark-400 rounded-xl">
@@ -61,7 +72,7 @@ const GlobalResult = () => {
               result.map((item: any, index: number) => (
                 <div key={index} className="flex gap-3 items-center px-5 py-3 rounded-lg hover:bg-light-700 dark:hover:bg-dark-500/50">
                   <Link
-                    href={renderLink('type', 'id')}
+                    href={renderLink(item.type, item.id)}
                     key={item.type + item.id + index}
                     className='flex w-full cursor-pointer items-start gap-3 px-5 py-2.5 rounded-lg hover:bg-light-700/50 dark:bg-dark-500/50'
                   >
