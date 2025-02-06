@@ -48,9 +48,17 @@ export async function createQuestion(params: CreateQuestionParams) {
       await Question.findByIdAndUpdate(question._id, {
         $push: { tags: { $each: tagDocuments }}
       });
-      // Create an interaction record for the user`s ask question action
-      // Increment authors reputationby +5 points fot creating a question
     }
+
+    // Create an interaction record for the user`s ask question action
+    await Interaction.create({
+      user: author,
+      action: 'ask_question',
+      question: question._id,
+      tags: tagDocuments,
+    })
+    // Increment authors reputationby +5 points fot creating a question
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
     revalidatePath(path);
   } catch (error) {
     console.log("🚀 ~ file: question.action.ts:54 ~ createQuestion ~ error:", error);
