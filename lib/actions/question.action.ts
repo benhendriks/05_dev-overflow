@@ -105,7 +105,16 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
     if(!question){
       throw new Error('Question not found');
     }
-    // Increment authors reputation by +10 points for upvoting a question
+    // Increment authors reputation by +1/-1 upvoting/revoking an upvote to the question
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -1 : 1 }
+    })
+
+    // Icrement Authors reputation by +10/-10 for recieving an upvote or an downvote to the question
+    await User.findByIdAndUpdate(question.author, {
+      $inc: { reputation: hasupVoted ? -10 : 10 }
+    })
+
     revalidatePath(path);
   }catch (error){
     console.log("🚀 ~ file: question.action.ts:101 ~ upvoteQuestion ~ error:", error)
