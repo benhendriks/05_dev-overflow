@@ -1,4 +1,5 @@
 'use client'
+import { downvoteAnswer, upvoteAnswer } from '@/lib/actions/answer.action';
 import { viewQuestion } from '@/lib/actions/interaction.action';
 import { downvoteQuestion, upvoteQuestion } from '@/lib/actions/question.action';
 import { toggleSaveQuestion } from '@/lib/actions/user.action';
@@ -46,13 +47,13 @@ const Votes = (
             path: pathName,
           });
         } else if(type === 'Answer') {
-/*             await upvoteAnswer({
-              questionId: JSON.parse(itemId),
+            await upvoteAnswer({
+              answerId: JSON.parse(itemId),
               userId: JSON.parse(userId),
               hasupVoted,
               hasdownVoted,
               path: pathName,
-          }); */
+          });
         }
         // Show a toast
         return;
@@ -68,13 +69,13 @@ const Votes = (
             path: pathName,
           });
         } else if(type === 'Answer') {
-/*             await downvoteAnswer({
-              questionId: JSON.parse(itemId),
-              userId: JSON.parse(userId),
-              hasupVoted,
-              hasdownVoted,
-              path: pathName,
-          }); */
+          await downvoteAnswer({
+            answerId: JSON.parse(itemId),
+            userId: JSON.parse(userId),
+            hasupVoted,
+            hasdownVoted,
+            path: pathName,
+          });
         }
         // Show a toast
         return;
@@ -122,14 +123,16 @@ const Votes = (
           </div>
         </div>
       </div>
-        <Image
-          src={hasSaved ? '/assets/icons/star-filled.svg' : '/assets/icons/star-red.svg'}
-          alt='star'
-          width={18}
-          height={18}
-          className='cursor-pointer'
-          onClick={() => handleSave()}
-        />
+        {type === 'Question' && (
+          <Image
+            src={hasSaved ? '/assets/icons/star-filled.svg' : '/assets/icons/star-red.svg'}
+            alt='star'
+            width={18}
+            height={18}
+            className='cursor-pointer'
+            onClick={() => handleSave()}
+          />
+        )}
     </div>
   )
 }

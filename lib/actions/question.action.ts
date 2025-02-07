@@ -147,6 +147,14 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
       throw new Error('Question not found');
     }
     // Decrement authors reputation by +10 points for upvoting a question
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasdownVoted ? -2 : 2 }
+    })
+
+    // Icrement Authors reputation by +10/-10 for recieving an upvote or an downvote to the question
+    await User.findByIdAndUpdate(question.author, {
+      $inc: { reputation: hasdownVoted ? -10 : 10 }
+    })
     revalidatePath(path);
   } catch (error) {
     console.log("🚀 ~ file: question.action.ts:133 ~ downvoteQuestion ~ error:", error)
