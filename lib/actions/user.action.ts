@@ -203,11 +203,57 @@ export async function getUserInfo(params: GetUserByIdParams) {
     if(!user) {
       throw new Error('User not found')
     }
-
+    
     const totalQuestions = await Question.countDocuments({ author: user._id });
     const totalAnswers = await Answer.countDocuments({ author: user._id });
+    
+    const [questionUpvotes] = await Question.aggregate([
+      { $match: { author: user_id }},
+        { $project: { 
+          _id: 0, upvotes: { $size: "upvotes" }
+        }},
+        { $group: {  
+          _id: null, 
+          totalUpvotes: { $sum: "$upvotes" } 
+        }}
+    ])
 
-    return { user, totalQuestions, totalAnswers };
+    const [answerUpvotes] = await Answer.aggregate([
+      { $match: { author: user_id }},
+        { $project: { 
+          _id: 0, upvotes: { $size: "upvotes" }
+        }},
+        { $group: {  
+          _id: null, 
+          totalUpvotes: { $sum: "$upvotes" } 
+        }}
+    ])
+
+    const [questionViews] = await Question.aggregate([
+      { $match: { author: user_id }},
+        { $group: {  
+          _id: null, 
+          totalViews: { $sum: "$views" } 
+        }}
+    ])
+
+    const criterea = [
+      { type: 'QUESTION_COUNT' as BadgeCriteriaType, count: totalQuestions },
+      { type: 'ANSWER_COUNT' as BadgeCriteriaType, count: totalAnswers },
+      { type: 'QUESTION_UPVOTE' as BadgeCriteriaType, count: questionUpvotes?.totalUpvotes || 0 },
+      { type: 'ANSWER_UPVOTES' as BadgeCriteriaType, count: answerUpvotes?.totalUpvotes || 0},
+      { type: 'TOTAL_VIEWS' as BadgeCriteriaType, count:  questionViews?.totalViews || 0},
+    ]
+
+    const badgeCounts = assignBadges({ criteria });  
+
+    return { 
+      user, 
+      totalQuestions, 
+      totalAnswers, 
+      badgeCounts, 
+      reputation: user.reputation,
+    };
   } catch (error) {
     console.log("🚀 ~ file: user.action.ts:175 ~ getUserInfo ~ error:", error)
     throw error;
