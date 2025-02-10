@@ -23,7 +23,6 @@ interface Props {
 
 const AnswerCard = ({
   clerkId,
-  key,
   question,
   _id,
   author,
@@ -31,7 +30,7 @@ const AnswerCard = ({
   createdAt,
 }: Props) => {
   const showActionButtons = true;
-    //clerkId && clerkId === author._id;
+    clerkId && clerkId === author._id;
     return (
     <Link
       href={`/question/${question?._id}/#${_id}`}

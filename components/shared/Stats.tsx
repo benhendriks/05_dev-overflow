@@ -1,6 +1,6 @@
 import { formatAndDivideNumber } from '@/lib/utils';
+import { BadgeCounts } from '@/types';
 import Image from 'next/image';
-import BadgeCounts from '@/types';
 
 interface StatsCardProps {
   imgUrl: string;
@@ -36,7 +36,7 @@ interface Props {
   reputation: number;
 }
 
-const Stats = ({ totalQuestions, totalAnswers, badgeCounts, reputation }: Props) => {
+const Stats = ({ totalQuestions, totalAnswers, badges, reputation }: Props) => {
   return (
     <div className="mt-10">
       <h4 className="h3-semibold text-dark200_light900">Stats {reputation}</h4>

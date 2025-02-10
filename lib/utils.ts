@@ -1,3 +1,5 @@
+import { BADGE_CRITERIA } from '@/constants';
+import { BadgeCounts } from '@/types';
 import { clsx, type ClassValue } from "clsx";
 import qs from 'query-string';
 import { twMerge } from "tailwind-merge";
@@ -95,11 +97,11 @@ export const removeKeysFromQuery = ({params, keysToRemove}: RemoveUrlQueryParams
 interface BadgeParam {
   criteria: {
     type: keyof typeof BADGE_CRITERIA;
-    count: number; 
+    count: number;
   }[]
 }
 
-export const assignBadges = (param: BadgeParam) => {
+export const assignBadges = (params: BadgeParam) => {
   const badgeCounts: BadgeCounts = {
     GOLD: 0,
     SILVER: 0,
@@ -114,10 +116,10 @@ export const assignBadges = (param: BadgeParam) => {
 
     Object.keys(badgeLevels).forEach((level: any) => {
       if(count >= badgeLevels[level]) {
-        badgeCounts[level as keyof BadgeCounts] += 1; 
+        badgeCounts[level as keyof BadgeCounts] += 1;
+        console.log("badgeCountssajd", badgeCounts)
       }
     })
   })
-
   return badgeCounts;
-} 
+}
