@@ -15,7 +15,6 @@ import Link from 'next/link'
 const Page = async ({params, searchParams}: URLProps) => {
   const { userId: clerkId } = auth();
   const userInfo = await getUserInfo({userId: params.id});
-
   return (
     <>
       <div className="flex flex-col-reverse item-start justify-between sm:flex-row">
@@ -71,8 +70,9 @@ const Page = async ({params, searchParams}: URLProps) => {
         reputation={userInfo.reputation}
         totalQuestions={userInfo.totalQuestions}
         totalAnswers={userInfo.totalAnswers}
-        badges={userInfo.badgesCount}
+        badges={userInfo.badgeCounts}
       />
+
       <div className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="flex-1">
           <TabsList  className="background-light800_dark400 min-h-[42px] p-1">
