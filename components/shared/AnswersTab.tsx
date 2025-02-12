@@ -7,7 +7,7 @@ interface Props extends SearchParamsProps{
   clerkId?: string;
 }
 
-const AnswersTap = async ({ searchParams, userId, clerkId }: Props) => {
+const AnswersTab = async ({ searchParams, userId, clerkId }: Props) => {
 
   const result = await getUsersAnswers({ userId, page: 1 })
 
@@ -22,11 +22,10 @@ const AnswersTap = async ({ searchParams, userId, clerkId }: Props) => {
           author={item.author}
           upvotes={item.upvotes.length}
           createdAt={item.createdAt}
-        >
-        </AnswerCard>
+        />
       ))}
     </>
   )
 }
 
-export default AnswersTap
+export default AnswersTab

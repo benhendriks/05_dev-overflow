@@ -1,4 +1,4 @@
-import AnswersTap from '@/components/shared/AnswersTap'
+import AnswersTab from '@/components/shared/AnswersTab'
 import ProfileLink from '@/components/shared/ProfileLink'
 import QuestionsTap from '@/components/shared/QuestionsTap'
 import Stats from '@/components/shared/Stats'
@@ -87,7 +87,7 @@ const Page = async ({params, searchParams}: URLProps) => {
             />
           </TabsContent>
           <TabsContent value="answers">
-            <AnswersTap
+            <AnswersTab
               searchParams={searchParams}
               userId={userInfo.user._id}
               clerkId={clerkId ?? undefined}

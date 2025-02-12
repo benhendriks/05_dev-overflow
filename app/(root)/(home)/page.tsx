@@ -15,6 +15,9 @@ export default async function Home({ searchParams}: SearchParamsProps) {
     searchQuery: searchParams.q,
     filter: searchParams.filter,
   });
+  // Fetch recommmended questions
+
+
   return (
     <>
       <div className="flex flex-col-reverse justify-between w-full gap-4 sm:flex-row sm:item-center">
@@ -68,7 +71,7 @@ export default async function Home({ searchParams}: SearchParamsProps) {
       <div className="mt-10">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
-          isNext={searchParams?.page ? false : true}
+          isNext={result.isNext }
         />
       </div>
     </>
