@@ -61,7 +61,14 @@ const Answer = ({ question, questionId, authorId }:Props) => {
       })
 
       const aiAnswer = await response.json();
-      alert(aiAnswer.reply);
+      // Convert plain text to HTML fromat
+      const fromattedAnswer = aiAnswer.reply.replace(/\n/g, '<br />');
+      if(editorRef.current) {
+        const editor = editorRef.current as any;
+        editor.setContent(fromattedAnswer);
+      }
+      // Toast notification
+
     } catch (error) {
       console.log("Somne went wrong", error)
     } finally {
@@ -76,14 +83,22 @@ const Answer = ({ question, questionId, authorId }:Props) => {
         className='btn light-border-2 gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none dark:text-primary-500'
         onClick={generateAIAnswer}
       >
-        <Image
-          src='/assets/icons/stars.svg'
-          alt='star'
-          width={12}
-          height={12}
-          className='object-contain'
-        />
-        Generate an AI answer
+      {isSubmittingAI ? (
+        <>
+          Generating...
+        </>
+      ) : (
+        <>
+          <Image
+            src='/assets/icons/stars.svg'
+            alt='star'
+            width={12}
+            height={12}
+            className='object-contain'
+          />
+          Generate an AI answer
+        </>
+      )}
       </Button>
       </div>
       <Form {...form}>

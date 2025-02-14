@@ -15,7 +15,6 @@ interface Props {
   filter?: string;
 }
 const AllAnswers = async ({ questionId, userId, totalAnswers, page, filter }: Props) => {
-  console.log("🚀 ~ file: AllAnswers.tsx:18 ~ AllAnswers ~ totalAnswers:", totalAnswers)
   const result = await getAnswers({
     questionId,
     page: page ? +page : 1,
