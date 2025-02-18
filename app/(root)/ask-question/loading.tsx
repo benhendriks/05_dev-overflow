@@ -14,7 +14,7 @@ const Loading = () => {
       </div>
       <div className="felx flex-col gap-6">
         {[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map((item) => (
-          <Skeleton key={item} className="h-48 w-full rounded-xl" />
+          <Skeleton key={item} className="h-60 w-full rounded-2xl sm:w-[260px]" />
         ))}
       </div>
     </section>
