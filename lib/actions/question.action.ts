@@ -7,7 +7,7 @@ import Tag from '@/database/tag.modal';
 import User from '@/database/user.modal';
 import { revalidatePath } from 'next/cache';
 import { connectToDatabase } from '../mongoose';
-import { CreateQuestionParams, DeleteQuestionParams, EditQuestionParams, GetQuestionByIdParams, GetQuestionsParams, QuestionVoteParams } from './shared.types';
+import { CreateQuestionParams, DeleteQuestionParams, EditQuestionParams, GetQuestionByIdParams, GetQuestionsParams, QuestionVoteParams, RecommendedParams } from './shared.types';
 import { FilterQuery } from 'mongoose';
 
 export async function getQuestions(params: GetQuestionsParams) {
@@ -17,7 +17,7 @@ export async function getQuestions(params: GetQuestionsParams) {
     const { searchQuery, filter, page = 1, pageSize = 10 } = params;
 
     // Calculate the number of posts to skip based on the page number and page size
-    const skipAmaount = (page -1) * pageSize;
+    const skipAmount = (page -1) * pageSize;
 
     const query: FilterQuery<typeof Question> = {};
 
@@ -245,6 +245,73 @@ export async function getHotQuestions() {
     return hotQuestions;
   }catch (error){
     console.log("🚀 ~ getHotQuestions ~ error:", error)
+    throw error;
+  }
+}
+
+export async function getRecommendedQuestions(params: RecommendedParams) {
+  try {
+    await connectToDatabase()
+
+    const { userId, page = 1, pageSize = 20, searchQuery } = params;
+
+    // find user
+    const user = await User.findOne({ clerkId: userId });
+
+    if(!user) {
+      throw new Error("user not found");
+    }
+    const skipAmount = (page - 1) * pageSize;
+
+    // Find the User's Interactions
+    const userInteractions = await Interaction.find({ user: user._id })
+      .populate("tags")
+      .exec();
+
+    // Extract tags from users Interactions
+    const userTags = userInteractions.reduce((tags, interaction) => {
+      if(interaction.tags) {
+        tags = tags.concat(interaction.tags);
+      }
+      return tags;
+    }, []);
+
+    // Get distinct tag IDs from user`s interactions
+    const distinctUserTagIds = [
+      ...new Set(userTags.map((tag: any) => tag._id)),
+    ];
+
+    const query: FilterQuery<typeof Question> = {
+      $and: [
+        { tags: { $in: distinctUserTagIds } },
+        { author: { $ne: user._id } },
+      ],
+    };
+    if(searchQuery) {
+      query.$or = [
+        { title: { $regex: searchQuery, $options: "i" } },
+        { content: { $regex: searchQuery, $option: "i" }},
+      ];
+    }
+    const totalQuestions = await Question.countDocuments(query);
+
+    const recommendedQuestions = await Question.find(query)
+      .populate({
+        path: "tags",
+        model: Tag,
+      })
+      .populate({
+        path: "author",
+        model: User,
+      })
+      .skip(skipAmount)
+      .limit(pageSize);
+
+      const isNext = totalQuestions > skipAmount + recommendedQuestions.length;
+
+      return { questions: recommendedQuestions, isNext };
+  } catch (error) {
+    console.log("🚀 ~ file: question.action.ts:314 ~ getQuestionById ~ error:", error);
     throw error;
   }
 }
