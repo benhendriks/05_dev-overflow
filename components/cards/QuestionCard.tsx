@@ -17,6 +17,7 @@ interface QuestionProps {
     _id: string;
     name: string;
     picture: string;
+    clerkId: string;
   };
   upvotes: string[];
   views: number;
@@ -36,8 +37,8 @@ const QuestionCard = ({
   anwsers,
   createdAt,
 }: QuestionProps) => {
-  const showActionButtons = true;
-    //clerkId && clerkId === author._id;
+  const showActionButtons = clerkId && clerkId === author.clerkId;
+
 
   return (
     <div className="card-wrapper p-9 sm:px-11 rounded-[10px]">
@@ -50,7 +51,6 @@ const QuestionCard = ({
             <h3 className='sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1'>{title}</h3>
           </Link>
         </div>
-        {/* if signed in add creat update delete function */}
         <SignedIn>
           {showActionButtons && (
             <EditDeletActions type="Question" itemId={JSON.stringify(_id)} />
