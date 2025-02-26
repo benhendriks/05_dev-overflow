@@ -1,22 +1,25 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
+
   experimental: {
+    mdxRs: true,
+    serverComponentsExternalPackages: ["mongoose"],
     serverActions: true,
-    mdsRx: true,
-    serverComponentsExternalPackages: ['mongoose'],
   },
+
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '*'
+        protocol: "https",
+        hostname: "*",
       },
       {
-        protocol: 'http',
-        hostname: '*'
-      }
-    ]
+        protocol: "http",
+        hostname: "*",
+      },
+    ],
   }
 }
 
-module.exports = nextConfig
+module.exports = nextConfig;
