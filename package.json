@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.8",
-    "@types/prismjs": "^1.26.5"
+    "@types/prismjs": "^1.26.5",
+    "encoding": "^0.1.13"
   }
 }

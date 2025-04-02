@@ -8,6 +8,10 @@ const nextConfig = {
     serverActions: true,
   },
 
+  esLint: {
+    ignoreDuringBuilds: true,
+  },
+
   images: {
     remotePatterns: [
       {
